@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Modern Observability</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/jam.css">
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<img src="logo.svg" alt="Logo" class="custom-logo">
+					<h1>Modern <span class="text-accent">Observability</span></h1>
+					<p>Beyond Monitoring</p>
+					<p><small>Ken Tan - Lead Solutions Architect | Shaun Teo - Country Manager</small></p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Agenda</h2>
+					<ol>
+						<li class="fragment">The Case for Observability</li>
+						<li class="fragment">Architecture and Economics</li>
+						<li class="fragment">Operational Excellence at Scale</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Why Are We Talking About Observability Now?</h2>
+					<img src="assets/sliderman/Slide1_WhyNow.png" alt="Why now observability overview" class="slide-img-xl">
+				</section>
+
+				<section>
+					<h2 class="slide-title">Biggest Pain Points</h2>
+					<img src="assets/sliderman/slide1.png" alt="Observability dashboard preview" class="slide-img-preview">
+					<ul>
+						<li class="fragment"><strong class="text-accent">High MTTR:</strong> Teams spend too long finding root cause, increasing outage impact.</li>
+						<li class="fragment"><strong class="text-accent">Alert Fatigue:</strong> Noisy alerts hide incidents that truly matter.</li>
+						<li class="fragment"><strong class="text-accent">Reactive Firefight:</strong> Teams respond after damage instead of preventing failures.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Before and After Observability</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>The Before</h3>
+							<ul>
+								<li class="fragment">Black-box effect across microservices</li>
+								<li class="fragment">High MTTR and guesswork</li>
+								<li class="fragment">Alert fatigue without user context</li>
+								<li class="fragment">Siloed logs, metrics, traces</li>
+								<li class="fragment">Reactive incident discovery</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">The After</h3>
+							<ul>
+								<li class="fragment">End-to-end visibility</li>
+								<li class="fragment">Faster root cause analysis</li>
+								<li class="fragment">Actionable, user-impact alerts</li>
+								<li class="fragment">Proactive optimization</li>
+								<li class="fragment">Better user experience</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="slide-title">What is Observability</h2>
+					<blockquote>"Observability is the ability to understand a system's internal state by analyzing its external outputs, such as logs, metrics, and traces."</blockquote>
+					<p><small>Red Hat</small></p>
+					<ul>
+						<li class="fragment"><strong>Metrics:</strong> Fast numerical signal.</li>
+						<li class="fragment"><strong>Traces:</strong> End-to-end request journey.</li>
+						<li class="fragment"><strong>Logs:</strong> Detailed code-level events.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Monitoring vs Observability</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>Monitoring</h3>
+							<p><small>The "What"</small></p>
+							<ul>
+								<li class="fragment">Answers known-unknowns</li>
+								<li class="fragment">Predefined questions</li>
+								<li class="fragment">Dashboards and threshold alerts</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">Observability</h3>
+							<p><small>The "Why"</small></p>
+							<ul>
+								<li class="fragment">Explores unknown-unknowns</li>
+								<li class="fragment">Arbitrary queries</li>
+								<li class="fragment">Explains system behavior</li>
+							</ul>
+						</div>
+					</div>
+					<p class="fragment"><small><strong>Key takeaway:</strong> Monitoring tells you when; observability tells you why.</small></p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Prerequisite to Observability</h2>
+					<img src="assets/sliderman/Deck06_PreReq.png" alt="Prerequisites to observability diagram" class="slide-img-xl">
+				</section>
+
+				<section>
+					<h2 class="slide-title">The OpenTelemetry Collector</h2>
+					<p><small>A vendor-neutral pipeline to receive, process, and route telemetry without changing app code.</small></p>
+					<img src="assets/sliderman/Deck06a_TheOpenTelemetryCollector.png" alt="OpenTelemetry Collector architecture overview" class="slide-img-md">
+					<ul>
+						<li class="fragment"><strong>Receive:</strong> OTLP, Prometheus, Jaeger, Zipkin, and more</li>
+						<li class="fragment"><strong>Process:</strong> Batch, sample, enrich, redact</li>
+						<li class="fragment"><strong>Route:</strong> AWS and third-party backends in parallel</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">OTel Collector: Receiver</h2>
+					<img src="assets/sliderman/Deck06a_SlideCollectorReceiver.png" alt="Collector receiver diagram" class="slide-img-md">
+					<ul>
+						<li class="fragment"><strong>OTLP First:</strong> Standard endpoint for traces, metrics, logs</li>
+						<li class="fragment"><strong>Protocol Coverage:</strong> Prometheus, Jaeger, Zipkin, Fluent Forward</li>
+						<li class="fragment"><strong>Edge or Gateway:</strong> Local sidecar/daemon or centralized gateway</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">OTel Collector: Processor</h2>
+					<img src="assets/sliderman/Deck06a_SlideCollectorProcessor.png" alt="Collector processor diagram" class="slide-img-sm">
+					<ul>
+						<li class="fragment"><code>memory_limiter</code>: prevent OOM in bursts</li>
+						<li class="fragment"><code>batch</code>: reduce write and network overhead</li>
+						<li class="fragment"><code>resource/attributes</code>: normalize env/team/service</li>
+						<li class="fragment"><strong>Controls:</strong> filtering, tail sampling, PII redaction, route-by-signal</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">OTel Collector: Exporter</h2>
+					<img src="assets/sliderman/Deck06a_SlideCollectorExporter.png" alt="Collector exporter diagram" class="slide-img-md">
+					<ul>
+						<li class="fragment"><strong>AWS destinations:</strong> CloudWatch, X-Ray, AMP</li>
+						<li class="fragment"><strong>Third-party tools:</strong> Datadog, Splunk, New Relic, etc.</li>
+						<li class="fragment"><strong>Multi-home strategy:</strong> Dual export during migration</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">OTel Collector: Basic Config</h2>
+					<pre><code class="language-yaml" data-trim>
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+    timeout: 10s
+
+exporters:
+  debug: {}
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+					</code></pre>
+				</section>
+
+				<section>
+					<h2 class="slide-title">OTel Collector: Advanced Config</h2>
+					<pre><code class="language-yaml" data-trim>
+processors:
+  memory_limiter:
+    limit_mib: 1024
+  resource:
+    attributes:
+      - key: environment
+        value: production
+        action: upsert
+  tail_sampling:
+    decision_wait: 10s
+    policies:
+      - name: errors
+        type: status_code
+      - name: slow-traces
+        type: latency
+        latency: { threshold_ms: 1000 }
+
+exporters:
+  awsxray: {}
+  awsemf: {}
+  prometheusremotewrite:
+    endpoint: https://aps-workspaces.../remote_write
+  otlphttp:
+    endpoint: https://api.honeycomb.io
+					</code></pre>
+					<p><small>Production-style setup: enrichment, sampling, and multi-destination export.</small></p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">The Easy Button: Auto-Instrumentation</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>Manual Coding</h3>
+							<pre><code class="language-text" data-trim>
+span = tracer.startSpan(...)
+span.setAttribute(...)
+try {
+  doWork()
+} finally {
+  span.end()
+}
+							</code></pre>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">Zero-Code Agent</h3>
+							<pre><code class="language-bash" data-trim>java -javaagent:otel.jar -jar myapp.jar</code></pre>
+							<ul>
+								<li class="fragment">Automatic HTTP tracing</li>
+								<li class="fragment">Automatic DB query spans</li>
+								<li class="fragment">Automatic error capture</li>
+							</ul>
+						</div>
+					</div>
+					<p class="fragment"><small>Get ~80% visibility in minutes.</small></p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Architectural Pathways for Observability</h2>
+					<div class="grid-2">
+						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_1.png" alt="AWS Native" class="icon-70"><p><strong>AWS Native</strong><br><small>Pure AWS shops, small teams, low complexity.</small></p></div>
+						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_2.png" alt="Managed OSS" class="icon-70"><p><strong>Managed OSS</strong><br><small>Standards-based scaling without infra maintenance.</small></p></div>
+						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_3.png" alt="Third-Party SaaS" class="icon-70"><p><strong>Third-Party SaaS</strong><br><small>Feature-rich and fast-moving teams.</small></p></div>
+						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_4.png" alt="Self-Hosted OSS" class="icon-70"><p><strong>Self-Hosted OSS</strong><br><small>Extreme scale/privacy, but heavy labor cost.</small></p></div>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Decision Matrix</h2>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col">Criteria (Weight)</th><th class="winner-col">AWS Native</th><th>Managed OSS</th><th>Self-Hosted</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment">
+									<td class="metric-col">Weighted Score</td>
+									<td class="winner-col"><span class="tone-good">90%</span><br><span class="fit-badge fit-good">Best Fit</span></td>
+									<td><span class="tone-mid">74%</span><br><span class="fit-badge fit-mid">Good Fit</span></td>
+									<td><span class="tone-bad">45%</span><br><span class="fit-badge fit-bad">Niche Fit</span></td>
+								</tr>
+								<tr class="fragment">
+									<td class="metric-col">Time to Value (30%)</td>
+									<td class="winner-col"><span class="tone-good">Fast rollout</span></td>
+									<td><span class="tone-good">Fast rollout</span></td>
+									<td><span class="tone-bad">Slower rollout</span></td>
+								</tr>
+								<tr class="fragment">
+									<td class="metric-col">Security/Governance (25%)</td>
+									<td class="winner-col"><span class="tone-good">Strong guardrails</span></td>
+									<td><span class="tone-good">Strong guardrails</span></td>
+									<td><span class="tone-mid">Depends on team</span></td>
+								</tr>
+								<tr class="fragment">
+									<td class="metric-col">Operational Effort (20%)</td>
+									<td class="winner-col"><span class="tone-good">Low overhead</span></td>
+									<td><span class="tone-mid">Moderate</span></td>
+									<td><span class="tone-bad">Heavy</span></td>
+								</tr>
+								<tr class="fragment">
+									<td class="metric-col">Cost Predictability (15%)</td>
+									<td class="winner-col"><span class="tone-good">More predictable</span></td>
+									<td><span class="tone-mid">Moderate</span></td>
+									<td><span class="tone-bad">Variable</span></td>
+								</tr>
+								<tr class="fragment">
+									<td class="metric-col">Customization (10%)</td>
+									<td class="winner-col"><span class="tone-mid">Good enough</span></td>
+									<td><span class="tone-good">High flexibility</span></td>
+									<td><span class="tone-good">Maximum control</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<h1 style="font-size:4rem;" class="slide-title">AWS Observability</h1>
+					<!-- <div class="split">
+						<div class="split-col glass-card">
+							<h3>Amazon CloudWatch</h3>
+							<ul>
+								<li class="fragment">Metrics: CPU, RAM, Disk I/O</li>
+								<li class="fragment">Logs: central log groups</li>
+								<li class="fragment">Alarms: scaling and notifications</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3>AWS X-Ray</h3>
+							<ul>
+								<li class="fragment">Service map relationships</li>
+								<li class="fragment">Latency bottleneck analysis</li>
+								<li class="fragment">AWS SDK integration</li>
+							</ul>
+						</div>
+					</div>
+					<p class="fragment"><small>Why: zero infrastructure management.</small></p> -->
+				</section>
+
+				<!-- <section>
+					<h2 class="slide-title">AWS Native Workflow</h2>
+					<ol>
+						<li class="fragment"><strong>Collection:</strong> EC2, Lambda, ECS emit data</li>
+						<li class="fragment"><strong>Ingestion:</strong> CloudWatch API and X-Ray daemon aggregate</li>
+						<li class="fragment"><strong>Visualize:</strong> Dashboards and service maps</li>
+						<li class="fragment"><strong>Action:</strong> SNS alarms and autoscaling response</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2 class="slide-title">AWS Native Coverage Map</h2>
+					<ul>
+						<li class="fragment">CloudWatch: metrics, logs, alarms</li>
+						<li class="fragment">X-Ray: distributed tracing</li>
+						<li class="fragment">CloudTrail: audit events</li>
+						<li class="fragment">OpenSearch: searchable logs</li>
+						<li class="fragment">AMP/AMG: managed metrics and dashboards</li>
+						<li class="fragment">VPC Flow Logs: network telemetry</li>
+					</ul>
+					<p class="fragment"><strong>Coverage outcome:</strong> 80%+ Day-1 visibility for most AWS workloads.</p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">AWS Managed Open Source</h2>
+					<p><small>The best of both worlds: open standards without operational toil.</small></p>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>AMP</h3>
+							<ul>
+								<li class="fragment">Scalable metrics ingest</li>
+								<li class="fragment">IAM-integrated security</li>
+								<li class="fragment">PromQL compatible</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3>AMG</h3>
+							<ul>
+								<li class="fragment">Rich dashboards</li>
+								<li class="fragment">SSO integration</li>
+								<li class="fragment">CloudWatch/X-Ray/Timestream plugins</li>
+							</ul>
+						</div>
+					</div>
+				</section> -->
+
+				<section>
+					<h2 class="slide-title">Third-Party SaaS Options</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>The Appeal</h3>
+							<ul>
+								<li class="fragment">Polished UI and low barrier to entry</li>
+								<li class="fragment">Specialized high-cardinality features</li>
+								<li class="fragment">Mature AI anomaly/correlation insights</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3>Trade-offs</h3>
+							<ul>
+								<li class="fragment">Data sovereignty concerns</li>
+								<li class="fragment">AWS egress costs</li>
+								<li class="fragment">Vendor premium at scale</li>
+							</ul>
+						</div>
+					</div>
+					<p class="fragment"><small>Decision point: buy vs build on managed services.</small></p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Operational Burden Comparison</h2>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col">Task</th><th class="winner-col">AWS Native</th><th>Managed OSS</th><th>Self-Hosted</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td class="metric-col">Patch and upgrade stack</td><td class="winner-col"><span class="tone-good">None</span></td><td><span class="tone-mid">Minimal</span></td><td><span class="tone-bad">Heavy</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Scale ingestion and storage</td><td class="winner-col"><span class="tone-good">Auto</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">Manual</span></td></tr>
+								<tr class="fragment"><td class="metric-col">24/7 availability</td><td class="winner-col"><span class="tone-good">Built-in</span></td><td><span class="tone-good">Built-in</span></td><td><span class="tone-bad">DIY</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Security hardening</td><td class="winner-col"><span class="tone-good">Native</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">DIY</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<p class="fragment"><small>Focus engineering effort on reliability, not observability platform upkeep.</small></p>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Observability Maturity Model</h2>
+					<img src="assets/sliderman/Slide6t_MaturityModel.png" alt="Observability maturity model" class="slide-img-xl">
+				</section>
+
+				<section>
+					<h2 class="slide-title">Total Cost of Ownership (TCO)</h2>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col">Feature</th><th>Self-Hosted OSS</th><th>Third-Party SaaS</th><th class="winner-col">AWS Managed</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td class="metric-col">Operational Toil</td><td><span class="tone-bad">High</span></td><td><span class="tone-good">Low</span></td><td class="winner-col"><span class="tone-good">Very Low</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Data Control</td><td><span class="tone-good">Full</span></td><td><span class="tone-bad">Low</span></td><td class="winner-col"><span class="tone-good">Full</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Price Model</td><td><span class="tone-mid">Infra + Headcount</span></td><td><span class="tone-bad">Per Host/Metric</span></td><td class="winner-col"><span class="tone-good">Pay-as-you-go</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Flexibility</td><td><span class="tone-good">High</span></td><td><span class="tone-bad">Low (lock-in)</span></td><td class="winner-col"><span class="tone-good">High (OTel standard)</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="slide-title">The Real Cost: Apples to Apples</h2>
+					<p><small>Scenario: Mid-size startup | 50 hosts | 2TB logs/month | 3 engineers</small></p>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col"></th><th>Self-Hosted</th><th>3rd Party SaaS</th><th class="winner-col">AWS Native</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td class="metric-col">Monthly profile</td><td><span class="tone-bad">$1.2k infra + $12k maintenance*</span></td><td><span class="tone-mid">$4.5k fee + $1.8k egress</span></td><td class="winner-col"><span class="tone-good">$3.2k usage, $0 egress</span></td></tr>
+								<tr class="fragment"><td class="metric-col">3-Year TCO</td><td><span class="tone-bad">$475k</span></td><td><span class="tone-mid">$270k+ (unpredictable)</span></td><td class="winner-col"><span class="tone-good">$115k (winner)</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="slide-title">SLOs: Turn Reliability into an Operating Contract</h2>
+					<ul>
+						<li class="fragment"><strong>SLI:</strong> user-facing metric (good events / valid events)</li>
+						<li class="fragment"><strong>SLO:</strong> target reliability (e.g., 99.9% per 30 days)</li>
+						<li class="fragment"><strong>Error Budget:</strong> allowed failure window for controlled risk</li>
+					</ul>
+					<p class="fragment"><small>99.9% monthly SLO = ~43 minutes budgeted unavailability.</small></p>
+					<h3 class="fragment">Burn-Rate Alerting</h3>
+					<ul>
+						<li class="fragment">Healthy: no page</li>
+						<li class="fragment">Fast burn: ticket + team alert</li>
+						<li class="fragment">Exhaustion risk: immediate page</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Smart Sampling: Quality vs Cost</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>Head Sampling</h3>
+							<ul>
+								<li class="fragment">Decision made at request start</li>
+								<li class="fragment">Lowest cost</li>
+								<li class="fragment">Can miss rare errors</li>
+								<li class="fragment"><small>Best for high-volume healthy traffic</small></li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">Tail Sampling</h3>
+							<ul>
+								<li class="fragment">Decision made after request completion</li>
+								<li class="fragment">Medium cost (buffer required)</li>
+								<li class="fragment">Captures 100% of errors/slow traces</li>
+								<li class="fragment"><small>Best for intermittent issue debugging</small></li>
+							</ul>
+						</div>
+					</div>
+					<p class="fragment"><small>Observe 100% of failures without paying for 100% of successes.</small></p>
+				</section>
+
+				<section>
+					<h1 class="text-accent">Demo</h1>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Observability Is Not Set-and-Forget</h2>
+					<p><small>A full-time operating discipline, not a one-time installation.</small></p>
+					<ul>
+						<li class="fragment"><strong>Systems change daily:</strong> new blind spots from ongoing delivery</li>
+						<li class="fragment"><strong>Signals degrade:</strong> dashboards drift, alerts get noisy</li>
+						<li class="fragment"><strong>Ownership moves:</strong> standards and SLOs require active maintenance</li>
+						<li class="fragment"><strong>Optimization never stops:</strong> cost/perf/reliability need continuous tuning</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Conclusion and Call to Action</h2>
+					<p><small>Observability is a journey, not a product.</small></p>
+					<ol>
+						<li class="fragment">Audit blind spots: identify where you are flying blind</li>
+						<li class="fragment">Pilot ADOT on one critical microservice</li>
+						<li class="fragment">Deploy with confidence: shift from reactive to proactive</li>
+					</ol>
+					<p class="fragment"><small>"Give engineers the confidence to deploy on Friday afternoon."</small></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
