@@ -314,6 +314,88 @@
 				border-color: rgba(255, 120, 120, 0.32);
 			}
 
+			.reveal .table-wrap {
+				width: 100%;
+				margin: 0.42em auto 0;
+				padding: 0.24em;
+				border-radius: 14px;
+				border: 1px solid rgba(255, 255, 255, 0.16);
+				background: linear-gradient(180deg, rgba(11, 26, 58, 0.8), rgba(9, 19, 44, 0.72));
+				box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+			}
+
+			.reveal .slide-table {
+				width: 100%;
+				font-size: 0.56em;
+				border-collapse: separate;
+				border-spacing: 0;
+				overflow: hidden;
+				border-radius: 10px;
+				table-layout: fixed;
+			}
+
+			.reveal .slide-table thead th {
+				padding: 0.46em 0.52em;
+				background: linear-gradient(180deg, rgba(249, 191, 14, 0.28), rgba(249, 191, 14, 0.14));
+				color: #fff;
+				text-transform: uppercase;
+				letter-spacing: 0.045em;
+				font-size: 0.84em;
+				border-top: 1px solid rgba(255, 255, 255, 0.14);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+			}
+
+			.reveal .slide-table tbody td {
+				padding: 0.42em 0.5em;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+				border-right: 1px solid rgba(255, 255, 255, 0.08);
+				vertical-align: top;
+				line-height: 1.24;
+			}
+
+			.reveal .slide-table thead th:last-child,
+			.reveal .slide-table tbody td:last-child {
+				border-right: 0;
+			}
+
+			.reveal .slide-table tbody tr:last-child td {
+				border-bottom: 0;
+			}
+
+			.reveal .slide-table tbody tr:nth-child(odd) td {
+				background: rgba(255, 255, 255, 0.045);
+			}
+
+			.reveal .slide-table tbody tr:nth-child(even) td {
+				background: rgba(255, 255, 255, 0.02);
+			}
+
+			.reveal .slide-table .metric-col {
+				width: 32%;
+				font-weight: 700;
+				color: rgba(255, 255, 255, 0.96);
+				background: rgba(255, 255, 255, 0.06);
+			}
+
+			.reveal .slide-table .winner-col {
+				background: rgba(125, 249, 167, 0.11);
+			}
+
+			.reveal .tone-good {
+				color: #9de59f;
+				font-weight: 700;
+			}
+
+			.reveal .tone-mid {
+				color: #ffd34f;
+				font-weight: 700;
+			}
+
+			.reveal .tone-bad {
+				color: #ff7a7a;
+				font-weight: 700;
+			}
+
 			.component-grid {
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -397,6 +479,14 @@
 				.arch-grid,
 				.component-grid {
 					grid-template-columns: 1fr;
+				}
+
+				.reveal .table-wrap {
+					padding: 0.16em;
+				}
+
+				.reveal .slide-table {
+					font-size: 0.5em;
 				}
 			}
 		</style>
@@ -657,6 +747,22 @@ span.end()
 				</section>
 
 				<section>
+					<h2 class="slide-title">AWS Native Observability</h2>
+				</section>
+
+				<section>
+					<h2 class="slide-title">AWS Managed Observability</h2>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Third-Party SaaS</h2>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Self-Hosted OSS</h2>
+				</section>
+
+				<section>
 					<!-- <span class="template-tag">Weighted Decision Table</span> -->
 					<h2 class="slide-title">Platform Selection Matrix</h2>
 					<div class="table-wrap">
@@ -688,16 +794,17 @@ span.end()
 
 				<section>
 					<!-- <span class="template-tag">Operational Burden Table</span> -->
-					<h2 class="slide-title">Run Cost by Responsibility</h2>
+					<h2 class="slide-title">Operational Burden Comparison</h2>
 					<div class="table-wrap">
 						<table class="slide-table">
 							<thead>
-								<tr><th class="metric-col">Task</th><th class="winner-col">Managed</th><th>Hybrid</th><th>Self-Run</th></tr>
+								<tr><th class="metric-col">Task</th><th class="winner-col">AWS Native</th><th>Managed OSS</th><th>Self-Hosted</th></tr>
 							</thead>
 							<tbody>
-								<tr class="fragment"><td class="metric-col">Patch / Upgrade</td><td class="winner-col"><span class="tone-good">None</span></td><td><span class="tone-mid">Light</span></td><td><span class="tone-bad">Heavy</span></td></tr>
-								<tr class="fragment"><td class="metric-col">Capacity Planning</td><td class="winner-col"><span class="tone-good">Automatic</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">Manual</span></td></tr>
-								<tr class="fragment"><td class="metric-col">Security Hardening</td><td class="winner-col"><span class="tone-good">Built-in</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">DIY</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Patch &amp; upgrade telemetry stack</td><td class="winner-col"><span class="tone-good">None</span></td><td><span class="tone-mid">Minimal</span></td><td><span class="tone-bad">Heavy</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Scale ingestion &amp; storage</td><td class="winner-col"><span class="tone-good">Auto</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">Manual</span></td></tr>
+								<tr class="fragment"><td class="metric-col">24/7 availability</td><td class="winner-col"><span class="tone-good">Built-in</span></td><td><span class="tone-good">Built-in</span></td><td><span class="tone-bad">DIY</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Security hardening</td><td class="winner-col"><span class="tone-good">Native</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">DIY</span></td></tr>
 							</tbody>
 						</table>
 					</div>
@@ -733,11 +840,11 @@ span.end()
 					<div class="table-wrap">
 						<table class="slide-table">
 							<thead>
-								<tr><th class="metric-col"></th><th>Self-Hosted</th><th>SaaS</th><th class="winner-col">Managed Cloud</th></tr>
+								<tr><th class="metric-col"></th><th>Self-Hosted</th><th>SaaS</th><th class="winner-col">AWS Managed</th><th>AWS Native</th></tr>
 							</thead>
 							<tbody>
-								<tr class="fragment"><td class="metric-col">Monthly Spend</td><td><span class="tone-bad">$19k</span></td><td><span class="tone-mid">$14k</span></td><td class="winner-col"><span class="tone-good">$9.5k</span></td></tr>
-								<tr class="fragment"><td class="metric-col">3-Year TCO</td><td><span class="tone-bad">$690k</span></td><td><span class="tone-mid">$510k</span></td><td class="winner-col"><span class="tone-good">$335k</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Monthly Spend</td><td><span class="tone-bad">$19k</span></td><td><span class="tone-mid">$14k</span></td><td class="winner-col"><span class="tone-good">$9.5k</span></td><td><span class="tone-mid">$11.2k</span></td></tr>
+								<tr class="fragment"><td class="metric-col">3-Year TCO</td><td><span class="tone-bad">$690k</span></td><td><span class="tone-mid">$510k</span></td><td class="winner-col"><span class="tone-good">$335k</span></td><td><span class="tone-mid">$420k</span></td></tr>
 							</tbody>
 						</table>
 					</div>
