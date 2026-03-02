@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Slide Template Storybook</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/jam.css">
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<style>
+			:root {
+				--slide-title-color: var(--color-accent);
+			}
+
+			.reveal-viewport {
+				background:
+					radial-gradient(2.8px 2.8px at 34px 42px, rgba(255, 255, 255, 0.38), transparent 4px),
+					radial-gradient(3.8px 3.8px at 122px 96px, rgba(255, 255, 255, 0.34), transparent 5px),
+					radial-gradient(2.2px 2.2px at 208px 56px, rgba(255, 255, 255, 0.3), transparent 3.4px),
+					radial-gradient(5px 5px at 278px 164px, rgba(255, 255, 255, 0.24), transparent 6.6px),
+					radial-gradient(3.2px 3.2px at 64px 220px, rgba(255, 255, 255, 0.28), transparent 4.4px),
+					radial-gradient(5.6px 5.6px at 198px 244px, rgba(255, 255, 255, 0.2), transparent 7.2px),
+					radial-gradient(1200px 650px at 20% 0%, rgba(22, 58, 129, 0.35), transparent 55%),
+					radial-gradient(900px 500px at 85% 100%, rgba(70, 120, 134, 0.22), transparent 60%),
+					linear-gradient(165deg, #0d1833 0%, #101f40 45%, #132e60 100%);
+				background-size: 260px 260px, 360px 360px, 470px 470px, 620px 620px, 540px 540px, 760px 760px, auto, auto, auto;
+			}
+
+			.slide-watermark {
+				position: fixed;
+				left: 18px;
+				bottom: 20px;
+				width: 102px;
+				height: 34px;
+				background: url("../logo.svg") no-repeat left bottom / contain;
+				opacity: 0.82;
+				pointer-events: none;
+				z-index: 12;
+			}
+
+			.slide-watermark.is-hidden {
+				display: none;
+			}
+
+			.template-tag {
+				display: inline-block;
+				padding: 0.3rem 0.7rem;
+				border: 1px solid rgba(255, 255, 255, 0.28);
+				border-radius: 999px;
+				font-size: 0.62em;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				opacity: 0.9;
+			}
+
+			.template-subtitle {
+				margin-top: 0.6rem;
+				opacity: 0.9;
+				font-size: 0.58em;
+			}
+
+			.kpi-grid {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+				gap: 1rem;
+				margin-top: 1rem;
+			}
+
+			.kpi-card {
+				padding: 1rem;
+				border-radius: 0.8rem;
+				background: rgba(255, 255, 255, 0.06);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				text-align: left;
+			}
+
+			.kpi-value {
+				font-size: 1.3em;
+				font-weight: 700;
+				color: #7df9a7;
+			}
+
+			.flow {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+				gap: 1rem;
+				margin-top: 1rem;
+			}
+
+			.flow-step {
+				padding: 1rem;
+				border-radius: 0.8rem;
+				background: rgba(255, 255, 255, 0.06);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				text-align: left;
+			}
+
+			.flow-step .step-num {
+				font-size: 0.7em;
+				opacity: 0.75;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+
+			.timeline {
+				margin-top: 1rem;
+				text-align: left;
+			}
+
+			.timeline-item {
+				padding: 0.8rem 1rem;
+				border-left: 3px solid rgba(255, 255, 255, 0.4);
+				margin: 0.5rem 0;
+				background: rgba(255, 255, 255, 0.06);
+			}
+
+			.timeline-item strong {
+				color: #ffc870;
+			}
+
+			.risk-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1rem;
+				margin-top: 1rem;
+			}
+
+			.risk-card {
+				padding: 1rem;
+				border-radius: 0.8rem;
+				background: rgba(255, 255, 255, 0.06);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				text-align: left;
+			}
+
+			.metric-pill {
+				display: inline-block;
+				padding: 0.2rem 0.55rem;
+				border-radius: 999px;
+				font-size: 0.6em;
+				border: 1px solid rgba(255, 255, 255, 0.25);
+				margin-right: 0.4rem;
+			}
+
+			.usecase-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 0.9rem;
+				margin-top: 1rem;
+			}
+
+			.usecase-card {
+				padding: 0.9rem;
+				border-radius: 0.8rem;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.17);
+				text-align: left;
+				font-size: 0.9em;
+			}
+
+			.faq-item {
+				text-align: left;
+				padding: 0.8rem 1rem;
+				background: rgba(255, 255, 255, 0.05);
+				border-left: 3px solid rgba(255, 255, 255, 0.4);
+				margin: 0.6rem 0;
+			}
+
+			.arch-grid {
+				display: grid;
+				grid-template-columns: 1.2fr 0.8fr;
+				gap: 1rem;
+				margin-top: 1rem;
+				align-items: start;
+			}
+
+			.arch-canvas {
+				padding: 1rem;
+				border-radius: 0.8rem;
+				border: 1px dashed rgba(255, 255, 255, 0.35);
+				background: rgba(255, 255, 255, 0.05);
+				min-height: 300px;
+				text-align: left;
+			}
+
+			.arch-layers {
+				display: grid;
+				gap: 0.6rem;
+				margin-top: 0.8rem;
+			}
+
+			.arch-layer {
+				padding: 0.65rem 0.8rem;
+				border-radius: 0.6rem;
+				background: rgba(255, 255, 255, 0.07);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				font-size: 0.55em;
+			}
+
+			.component-list {
+				padding: 1rem;
+				border-radius: 0.8rem;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.17);
+				text-align: left;
+			}
+
+			.component-list ol {
+				margin-top: 0.5rem;
+			}
+
+			.component-list li {
+				margin: 0.45rem 0;
+				font-size: 0.57em;
+			}
+
+			.marker-slide-title li::marker {
+				color: var(--slide-title-color);
+			}
+
+			.split-equal {
+				align-items: stretch;
+				gap: 1rem;
+			}
+
+			.split-equal > .split-col {
+				display: flex;
+				flex: 1 1 0;
+				align-self: stretch;
+			}
+
+			.split-equal > .split-col.glass-card,
+			.split-equal > .split-col .glass-card {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.split-equal .glass-card h3 {
+				margin: 0 0 0.35em;
+				padding-bottom: 0.2em;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+			}
+
+			.split-equal .glass-card ul {
+				margin: 0.25em 0 0 1.05em;
+			}
+
+			.split-equal .glass-card li {
+				margin: 0.22em 0;
+			}
+
+			.platform-matrix {
+				font-size: 0.56em;
+			}
+
+			.platform-matrix thead th {
+				font-size: 0.82em;
+				letter-spacing: 0.04em;
+			}
+
+			.platform-matrix .matrix-col-head {
+				display: block;
+				font-weight: 700;
+			}
+
+			.platform-matrix .matrix-col-sub {
+				display: block;
+				margin-top: 0.18em;
+				font-size: 0.72em;
+				opacity: 0.78;
+				text-transform: none;
+				letter-spacing: 0;
+			}
+
+			.platform-matrix .score-badge {
+				display: inline-block;
+				padding: 0.1em 0.42em;
+				border-radius: 999px;
+				font-weight: 700;
+				line-height: 1.2;
+				margin-right: 0.28em;
+				background: rgba(255, 255, 255, 0.1);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+			}
+
+			.platform-matrix .fit-badge {
+				display: inline-block;
+				padding: 0.1em 0.42em;
+				border-radius: 999px;
+				font-size: 0.78em;
+				font-weight: 600;
+				line-height: 1.2;
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				background: rgba(255, 255, 255, 0.08);
+			}
+
+			.platform-matrix .fit-best {
+				background: rgba(54, 211, 153, 0.18);
+				border-color: rgba(54, 211, 153, 0.35);
+			}
+
+			.platform-matrix .fit-good {
+				background: rgba(249, 191, 14, 0.18);
+				border-color: rgba(249, 191, 14, 0.35);
+			}
+
+			.platform-matrix .fit-niche {
+				background: rgba(255, 120, 120, 0.16);
+				border-color: rgba(255, 120, 120, 0.32);
+			}
+
+			.component-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 0.9rem;
+				margin-top: 1rem;
+			}
+
+			.component-card {
+				padding: 0.9rem 1rem;
+				border-radius: 0.8rem;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				text-align: left;
+			}
+
+			.component-card h3 {
+				margin-bottom: 0.35rem;
+			}
+
+			.component-card p {
+				font-size: 0.55em;
+				margin: 0.35rem 0;
+			}
+
+			.image-placeholder {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				padding: 0.7rem;
+				margin: 0.8rem auto;
+				border-radius: 0.7rem;
+				border: 1px dashed rgba(255, 255, 255, 0.35);
+				background: rgba(255, 255, 255, 0.07);
+				color: rgba(255, 255, 255, 0.85);
+				font-size: 0.5em;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.image-placeholder.custom-logo {
+				width: 200px;
+				height: 70px;
+			}
+
+			.image-placeholder.slide-img-xl {
+				width: min(100%, 980px);
+				min-height: 360px;
+			}
+
+			.image-placeholder.slide-img-preview {
+				width: min(100%, 840px);
+				min-height: 300px;
+			}
+
+			.image-placeholder.slide-img-md {
+				width: min(100%, 760px);
+				min-height: 260px;
+			}
+
+			.image-placeholder.slide-img-sm {
+				width: min(100%, 640px);
+				min-height: 220px;
+			}
+
+			.image-placeholder.icon-70 {
+				width: 70px;
+				height: 70px;
+				min-height: 70px;
+				margin: 0 auto 0.5rem;
+				font-size: 0.42em;
+			}
+
+			@media (max-width: 1100px) {
+				.kpi-grid,
+				.flow,
+				.usecase-grid {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+
+				.arch-grid,
+				.component-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<img src="../logo.svg" alt="Logo" class="custom-logo">
+					<h1>Modern <span class="text-accent">Observability</span></h1>
+					<p>BEYOND MONITORING</p>
+					<!-- <p><small>Use arrow keys to browse template examples</small></p> -->
+				</section>
+
+				<!-- <section>
+					<span class="template-tag">Title Slide</span>
+					<h2 class="slide-title">Incident Review: Checkout Latency Spike</h2>
+					<p class="template-subtitle">Use this for narrative openers with presenter and context metadata.</p>
+					<p><small>Platform Reliability Team | Q1 2026</small></p>
+				</section> -->
+
+				<section>
+					<!-- <span class="template-tag">Agenda / Ordered List</span> -->
+					<h2 class="slide-title">Agenda</h2>
+					<ol class="marker-slide-title">
+						<li class="fragment">Observability Concepts</li>
+						<li class="fragment">Platform Options</li>
+						<li class="fragment">Implementing on AWS - Amazon Kiro &amp; DevOps Agent</li>
+						<li class="fragment">Observability Demo</li>
+						<li class="fragment">TCO Comparisons</li>
+						<li class="fragment">Q&amp;A Session</li>
+					</ol>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Quote + Supporting Bullets</span> -->
+					<h2 class="slide-title">What is Observability</h2>
+					<blockquote>"Observability is the ability to understand a system's internal state by analyzing its external outputs, such as logs, metrics, and traces."</blockquote>
+					<p><small>Red Hat</small></p>
+					<ul>
+						<li class="fragment"><strong>Metrics:</strong> Fast numerical signal</li>
+						<li class="fragment"><strong>Traces:</strong> End-to-end request journey</li>
+						<li class="fragment"><strong>Logs:</strong> Detailed code-level events</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Image-Led Hero</span> -->
+					<h2 class="slide-title">Why Are We Talking About Observability Now?</h2>
+					<ol class="marker-slide-title">
+						<li class="fragment">Pain Points</li>
+						<li class="fragment">Rise of OpenTelemetry</li>
+						<li class="fragment">AI-assisted Incident Response</li>
+					</ol>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Image + Key Points</span> -->
+					<h2 class="slide-title">Biggest Pain Points</h2>
+					<div class="image-placeholder slide-img-preview">Dashboard Screenshot Placeholder</div>
+					<ul>
+						<li class="fragment"><strong class="text-accent">High MTTR:</strong> Takes too long to find root cause, increasing outage impact</li>
+						<li class="fragment"><strong class="text-accent">Alert Fatigue:</strong> Noisy alerts hide incidents that truly matter</li>
+						<li class="fragment"><strong class="text-accent">Reactive Firefight:</strong> Teams respond after damage instead of preventing failures</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Split: Before / After</span> -->
+					<h2 class="slide-title">Before and After Observability</h2>
+					<div class="split split-equal">
+						<div class="split-col glass-card">
+							<h3>The Before</h3>
+							<ul>
+								<li class="fragment" data-fragment-index="1">Black-box effect across microservices</li>
+								<li class="fragment" data-fragment-index="3">High MTTR and guesswork</li>
+								<li class="fragment" data-fragment-index="5">Alert fatigue without user context</li>
+								<li class="fragment" data-fragment-index="7">Siloed logs, metrics, traces</li>
+								<li class="fragment" data-fragment-index="9">Reactive incident discovery</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">The After</h3>
+							<ul>
+								<li class="fragment" data-fragment-index="2">End-to-end visibility</li>
+								<li class="fragment" data-fragment-index="4">Faster root cause analysis</li>
+								<li class="fragment" data-fragment-index="6">Actionable, user-impact alerts</li>
+								<li class="fragment" data-fragment-index="8">Proactive optimization</li>
+								<li class="fragment" data-fragment-index="10">Better user experience</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Comparison Split</span> -->
+					<h2 class="slide-title">Monitoring vs Observability</h2>
+					<p><small>The "What" vs the "Why"</small></p>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>Monitoring</h3>
+							<ul>
+								<li class="fragment">Answers known-unknown</li>
+								<li class="fragment">Predefined questions</li>
+								<li class="fragment">Dashboards and threshold alerts</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">Observability</h3>
+							<ul>
+								<li class="fragment">Explores unknown-unknowns</li>
+								<li class="fragment">Arbitrary queries</li>
+								<li class="fragment">Explains system behavior</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Diagram + Bullets</span> -->
+					<h2 class="slide-title">Prerequisite to Observability</h2>
+					<p><small>OpenTelemetry Ingestion (The Open Standard)</small></p>
+					<div class="image-placeholder slide-img-md">OpenTelemetry Ingestion Flow</div>
+					<ul>
+						<li class="fragment"><strong class="text-accent">Standard Protocol:</strong> OTLP unifies logs, metrics, and traces</li>
+						<li class="fragment"><strong class="text-accent">Portable Pipeline:</strong> process, enrich, and sample in one neutral layer</li>
+						<li class="fragment"><strong class="text-accent">Backend Flexibility:</strong> route to AWS and third-party tools without app rewrites</li>
+						<li class="fragment"><strong class="text-accent">Future-Proofing:</strong> reduce lock-in risk and keep migration paths open</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 class="slide-title">Prerequisite to Observability</h2>
+					<p><small>Proprietary Ingestion (The Vendor-Locked Path)</small></p>
+					<div class="image-placeholder slide-img-md">Proprietary Ingestion Flow</div>
+					<ul>
+						<li class="fragment"><strong class="text-accent">Vendor-Specific Agents:</strong> telemetry collection tied to one platform</li>
+						<li class="fragment"><strong class="text-accent">Closed Data Model:</strong> schema and query behavior coupled to vendor tooling</li>
+						<li class="fragment"><strong class="text-accent">High Switching Cost:</strong> migrations often require re-instrumentation and pipeline changes</li>
+						<li class="fragment"><strong class="text-accent">Reduced Optionality:</strong> less leverage on pricing, architecture, and roadmap control</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Component Deep Dive</span> -->
+					<h2 class="slide-title">Receiver Pattern</h2>
+					<div class="image-placeholder slide-img-md">Receiver Diagram Placeholder</div>
+					<ul>
+						<li class="fragment">Enforce one canonical ingestion endpoint</li>
+						<li class="fragment">Map signal sources by protocol</li>
+						<li class="fragment">Keep app teams vendor-agnostic</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Component Deep Dive</span> -->
+					<h2 class="slide-title">Processor Pattern</h2>
+					<div class="image-placeholder slide-img-sm">Processor Diagram Placeholder</div>
+					<ul>
+						<li class="fragment"><code>memory_limiter</code> for load spikes</li>
+						<li class="fragment"><code>batch</code> to reduce backend write pressure</li>
+						<li class="fragment">Tail sample only error/slow transactions</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Component Deep Dive</span> -->
+					<h2 class="slide-title">Exporter Pattern</h2>
+					<div class="image-placeholder slide-img-md">Exporter Diagram Placeholder</div>
+					<ul>
+						<li class="fragment">Mirror traffic during tool migrations</li>
+						<li class="fragment">Route logs, metrics, traces independently</li>
+						<li class="fragment">Preserve optional multi-home strategy</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Code Block (Basic)</span> -->
+					<h2 class="slide-title">Minimal Collector Bootstrap</h2>
+					<pre><code class="language-yaml" data-trim>
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch: {}
+
+exporters:
+  debug: {}
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+					</code></pre>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Code Block (Advanced)</span> -->
+					<h2 class="slide-title">Production Pipeline Controls</h2>
+					<pre><code class="language-yaml" data-trim>
+processors:
+  memory_limiter:
+    limit_mib: 2048
+  tail_sampling:
+    policies:
+      - name: error-traces
+        type: status_code
+      - name: high-latency
+        type: latency
+        latency: { threshold_ms: 1200 }
+
+exporters:
+  awsxray: {}
+  awsemf: {}
+  otlphttp:
+    endpoint: https://example.vendor.io
+					</code></pre>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Split: Code vs Outcome</span> -->
+					<h2 class="slide-title">Manual Instrumentation vs Auto Instrumentation</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>Manual</h3>
+							<pre><code class="language-text" data-trim>
+span = tracer.startSpan("checkout")
+span.setAttribute("tenant", tenantId)
+processOrder()
+span.end()
+							</code></pre>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">Auto</h3>
+							<pre><code class="language-bash" data-trim>java -javaagent:otel.jar -jar checkout.jar</code></pre>
+							<ul>
+								<li class="fragment">HTTP + DB spans out-of-box</li>
+								<li class="fragment">Fast baseline coverage</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<span class="template-tag">2x2 Cards Grid</span>
+					<h2 class="slide-title">Deployment Pathways</h2>
+					<div class="grid-2">
+						<div class="fragment glass-card"><div class="image-placeholder icon-70">Icon</div><p><strong>AWS Native</strong><br><small>Fast governance-aligned rollout</small></p></div>
+						<div class="fragment glass-card"><div class="image-placeholder icon-70">Icon</div><p><strong>Managed OSS</strong><br><small>Open standard with low ops burden</small></p></div>
+						<div class="fragment glass-card"><div class="image-placeholder icon-70">Icon</div><p><strong>SaaS</strong><br><small>Rich product features quickly</small></p></div>
+						<div class="fragment glass-card"><div class="image-placeholder icon-70">Icon</div><p><strong>Self-Hosted</strong><br><small>Max control, max effort</small></p></div>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Weighted Decision Table</span> -->
+					<h2 class="slide-title">Platform Selection Matrix</h2>
+					<div class="table-wrap">
+						<table class="slide-table platform-matrix">
+							<thead>
+								<tr>
+									<th class="metric-col">Criteria (Weight)</th>
+									<th class="winner-col"><span class="matrix-col-head">AWS Native</span><span class="matrix-col-sub">Managed AWS services</span></th>
+									<th><span class="matrix-col-head">Managed OSS</span><span class="matrix-col-sub">Open standard + managed control plane</span></th>
+									<th><span class="matrix-col-head">Self-Hosted</span><span class="matrix-col-sub">Team-operated stack</span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="fragment">
+									<td class="metric-col">Weighted Score</td>
+									<td class="winner-col"><span class="score-badge tone-good">90%</span><span class="fit-badge fit-best">Best Fit</span></td>
+									<td><span class="score-badge tone-mid">74%</span><span class="fit-badge fit-good">Good Fit</span></td>
+									<td><span class="score-badge tone-bad">45%</span><span class="fit-badge fit-niche">Niche Fit</span></td>
+								</tr>
+								<tr class="fragment"><td class="metric-col">Time to Value (30%)</td><td class="winner-col"><span class="tone-good">Fast rollout</span></td><td><span class="tone-good">Fast rollout</span></td><td><span class="tone-mid">Slower rollout</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Security/Governance (25%)</td><td class="winner-col"><span class="tone-good">Strong guardrails</span></td><td><span class="tone-good">Strong guardrails</span></td><td><span class="tone-mid">Depends on team</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Operational Effort (20%)</td><td class="winner-col"><span class="tone-good">Low overhead</span></td><td><span class="tone-mid">Moderate</span></td><td><span class="tone-bad">Heavy</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Cost Predictability (15%)</td><td class="winner-col"><span class="tone-good">More predictable</span></td><td><span class="tone-mid">Moderate</span></td><td><span class="tone-bad">Variable</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Customization (10%)</td><td class="winner-col"><span class="tone-mid">Good enough</span></td><td><span class="tone-good">High flexibility</span></td><td><span class="tone-good">Maximum control</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Operational Burden Table</span> -->
+					<h2 class="slide-title">Run Cost by Responsibility</h2>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col">Task</th><th class="winner-col">Managed</th><th>Hybrid</th><th>Self-Run</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td class="metric-col">Patch / Upgrade</td><td class="winner-col"><span class="tone-good">None</span></td><td><span class="tone-mid">Light</span></td><td><span class="tone-bad">Heavy</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Capacity Planning</td><td class="winner-col"><span class="tone-good">Automatic</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">Manual</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Security Hardening</td><td class="winner-col"><span class="tone-good">Built-in</span></td><td><span class="tone-mid">Shared</span></td><td><span class="tone-bad">DIY</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<!-- <section>
+					<span class="template-tag">Maturity Model Visual</span>
+					<h2 class="slide-title">Capability Growth Path</h2>
+					<div class="image-placeholder slide-img-xl">Maturity Model Placeholder</div>
+				</section> -->
+
+				<section>
+					<!-- <span class="template-tag">TCO Comparison Table</span> -->
+					<h2 class="slide-title">Cost and Control Trade-Offs</h2>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col">Category</th><th>Self-Hosted</th><th>SaaS</th><th class="winner-col">Managed Cloud</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td class="metric-col">Operational Toil</td><td><span class="tone-bad">High</span></td><td><span class="tone-good">Low</span></td><td class="winner-col"><span class="tone-good">Very Low</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Data Residency</td><td><span class="tone-good">Full Control</span></td><td><span class="tone-bad">Limited</span></td><td class="winner-col"><span class="tone-good">Configurable</span></td></tr>
+								<tr class="fragment"><td class="metric-col">Scaling Risk</td><td><span class="tone-bad">Team-bound</span></td><td><span class="tone-mid">Vendor-bound</span></td><td class="winner-col"><span class="tone-good">Elastic</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Scenario Cost Table</span> -->
+					<h2 class="slide-title">Apples-to-Apples Scenario</h2>
+					<p><small>Example: 80 services, 3TB logs/month, two on-call rotations</small></p>
+					<div class="table-wrap">
+						<table class="slide-table">
+							<thead>
+								<tr><th class="metric-col"></th><th>Self-Hosted</th><th>SaaS</th><th class="winner-col">Managed Cloud</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td class="metric-col">Monthly Spend</td><td><span class="tone-bad">$19k</span></td><td><span class="tone-mid">$14k</span></td><td class="winner-col"><span class="tone-good">$9.5k</span></td></tr>
+								<tr class="fragment"><td class="metric-col">3-Year TCO</td><td><span class="tone-bad">$690k</span></td><td><span class="tone-mid">$510k</span></td><td class="winner-col"><span class="tone-good">$335k</span></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Concept + Progressive Bullets</span> -->
+					<h2 class="slide-title">SLO Operating Contract</h2>
+					<ul>
+						<li class="fragment"><strong>SLI:</strong> what users actually experience</li>
+						<li class="fragment"><strong>SLO:</strong> reliability objective per time window</li>
+						<li class="fragment"><strong>Error Budget:</strong> controlled failure allowance</li>
+					</ul>
+					<h3 class="fragment">Response Policy</h3>
+					<ul>
+						<li class="fragment">Slow burn: backlog + owner</li>
+						<li class="fragment">Fast burn: paging escalation</li>
+					</ul>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Split Comparison</span> -->
+					<h2 class="slide-title">Head vs Tail Sampling</h2>
+					<div class="split">
+						<div class="split-col glass-card">
+							<h3>Head Sampling</h3>
+							<ul>
+								<li class="fragment">Lowest ingest cost</li>
+								<li class="fragment">Can miss rare failures</li>
+							</ul>
+						</div>
+						<div class="split-col glass-card">
+							<h3 class="text-accent">Tail Sampling</h3>
+							<ul>
+								<li class="fragment">Captures all critical outliers</li>
+								<li class="fragment">Needs buffering resources</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Divider / Chapter Break</span> -->
+					<h1 class="text-accent">Demo Segment</h1>
+					<!-- <p><small>Use as a transition between content-heavy sections</small></p> -->
+				</section>
+
+				<section>
+					<!-- <span class="template-tag">Conclusion + CTA</span> -->
+					<h2 class="slide-title">Close with Action</h2>
+					<ol>
+						<li class="fragment">Pick one critical service</li>
+						<li class="fragment">Apply standard telemetry contract</li>
+						<li class="fragment">Run incident game-day and tune alerts</li>
+					</ol>
+					<p class="fragment"><small>Outcome: fewer surprises, faster recovery, better release confidence.</small></p>
+				</section>
+			</div>
+			<div class="slide-watermark" aria-hidden="true"></div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			const slideWatermarkEl = document.querySelector('.slide-watermark');
+			const syncSlideWatermark = () => {
+				if (!slideWatermarkEl) return;
+				const { h, v } = Reveal.getIndices();
+				const isTitleSlide = h === 0 && (v === undefined || v === 0);
+				slideWatermarkEl.classList.toggle('is-hidden', isTitleSlide);
+			};
+
+			Reveal.on('ready', syncSlideWatermark);
+			Reveal.on('slidechanged', syncSlideWatermark);
+		</script>
+	</body>
+</html>

@@ -10,6 +10,22 @@
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/jam.css">
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.logo-placeholders {
+				margin-top: 0.55rem;
+				display: flex;
+				justify-content: center;
+				gap: 0.45rem;
+				flex-wrap: wrap;
+			}
+
+			.logo-placeholders img {
+				width: 68px;
+				height: 30px;
+				border-radius: 6px;
+				opacity: 0.9;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
@@ -249,10 +265,46 @@ try {
 				<section>
 					<h2 class="slide-title">Architectural Pathways for Observability</h2>
 					<div class="grid-2">
-						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_1.png" alt="AWS Native" class="icon-70"><p><strong>AWS Native</strong><br><small>Pure AWS shops, small teams, low complexity.</small></p></div>
-						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_2.png" alt="Managed OSS" class="icon-70"><p><strong>Managed OSS</strong><br><small>Standards-based scaling without infra maintenance.</small></p></div>
-						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_3.png" alt="Third-Party SaaS" class="icon-70"><p><strong>Third-Party SaaS</strong><br><small>Feature-rich and fast-moving teams.</small></p></div>
-						<div class="fragment glass-card"><img src="assets/sliderman/Deck12_MarketLandscape_4.png" alt="Self-Hosted OSS" class="icon-70"><p><strong>Self-Hosted OSS</strong><br><small>Extreme scale/privacy, but heavy labor cost.</small></p></div>
+						<div class="fragment glass-card">
+							<img src="assets/sliderman/Deck12_MarketLandscape_1.png" alt="AWS Native" class="icon-70">
+							<p><strong>AWS Native</strong><br><small>Pure AWS shops, small teams, low complexity.</small></p>
+							<div class="logo-placeholders">
+								<img src="X Ray.svg" alt="X-Ray">
+								<img src="CloudWatch.svg" alt="CloudWatch">
+								<img src="Managed Grafana.svg" alt="Managed Grafana">
+								<img src="Managed Service for Prometheus.svg" alt="Managed Service for Prometheus">
+							</div>
+						</div>
+						<div class="fragment glass-card">
+							<img src="assets/sliderman/Deck12_MarketLandscape_2.png" alt="Managed OSS" class="icon-70">
+							<p><strong>Managed OSS</strong><br><small>Standards-based scaling without infra maintenance.</small></p>
+							<div class="logo-placeholders">
+								<img src="X Ray.svg" alt="X-Ray">
+								<img src="CloudWatch.svg" alt="CloudWatch">
+								<img src="Managed Grafana.svg" alt="Managed Grafana">
+								<img src="Managed Service for Prometheus.svg" alt="Managed Service for Prometheus">
+							</div>
+						</div>
+						<div class="fragment glass-card">
+							<img src="assets/sliderman/Deck12_MarketLandscape_3.png" alt="Third-Party SaaS" class="icon-70">
+							<p><strong>Third-Party SaaS</strong><br><small>Feature-rich and fast-moving teams.</small></p>
+							<div class="logo-placeholders">
+								<img src="X Ray.svg" alt="X-Ray">
+								<img src="CloudWatch.svg" alt="CloudWatch">
+								<img src="Managed Grafana.svg" alt="Managed Grafana">
+								<img src="Managed Service for Prometheus.svg" alt="Managed Service for Prometheus">
+							</div>
+						</div>
+						<div class="fragment glass-card">
+							<img src="assets/sliderman/Deck12_MarketLandscape_4.png" alt="Self-Hosted OSS" class="icon-70">
+							<p><strong>Self-Hosted OSS</strong><br><small>Extreme scale/privacy, but heavy labor cost.</small></p>
+							<div class="logo-placeholders">
+								<img src="X Ray.svg" alt="X-Ray">
+								<img src="CloudWatch.svg" alt="CloudWatch">
+								<img src="Managed Grafana.svg" alt="Managed Grafana">
+								<img src="Managed Service for Prometheus.svg" alt="Managed Service for Prometheus">
+							</div>
+						</div>
 					</div>
 				</section>
 

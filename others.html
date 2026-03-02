@@ -1,0 +1,229 @@
+<section>
+    <!-- <span class="template-tag">KPI Scoreboard</span> -->
+    <h2 class="slide-title">Weekly Service Health Snapshot</h2>
+    <div class="kpi-grid">
+        <div class="kpi-card"><p>Availability</p><p class="kpi-value">99.94%</p><small>Target 99.9%</small></div>
+        <div class="kpi-card"><p>P95 Latency</p><p class="kpi-value">380ms</p><small>Target &lt; 450ms</small></div>
+        <div class="kpi-card"><p>Error Rate</p><p class="kpi-value">0.18%</p><small>Target &lt; 0.3%</small></div>
+        <div class="kpi-card"><p>MTTR</p><p class="kpi-value">19m</p><small>Target &lt; 30m</small></div>
+    </div>
+</section>
+
+<section>
+    <!-- <span class="template-tag">Process Flow</span> -->
+    <h2 class="slide-title">Incident Response Flow</h2>
+    <div class="flow">
+        <div class="flow-step"><p class="step-num">Step 1</p><h3>Detect</h3><p>Burn-rate breach triggers alert.</p></div>
+        <div class="flow-step"><p class="step-num">Step 2</p><h3>Triage</h3><p>Find impacted service and owner.</p></div>
+        <div class="flow-step"><p class="step-num">Step 3</p><h3>Mitigate</h3><p>Rollback, scale, or route around.</p></div>
+        <div class="flow-step"><p class="step-num">Step 4</p><h3>Learn</h3><p>Postmortem and guardrail updates.</p></div>
+    </div>
+</section>
+
+<section>
+    <!-- <span class="template-tag">Timeline / Milestones</span> -->
+    <h2 class="slide-title">90-Day Rollout Plan</h2>
+    <div class="timeline">
+        <div class="timeline-item"><strong>Weeks 1-2:</strong> Instrument top 3 customer-facing services.</div>
+        <div class="timeline-item"><strong>Weeks 3-6:</strong> Standardize dashboards, alert routing, and ownership metadata.</div>
+        <div class="timeline-item"><strong>Weeks 7-10:</strong> Define SLOs and implement burn-rate alerts.</div>
+        <div class="timeline-item"><strong>Weeks 11-12:</strong> Run game-day and publish reliability scorecard.</div>
+    </div>
+</section>
+
+<section>
+    <!-- <span class="template-tag">RACI / Ownership</span> -->
+    <h2 class="slide-title">Who Owns What During Incidents</h2>
+    <div class="table-wrap">
+        <table class="slide-table">
+            <thead>
+                <tr><th class="metric-col">Task</th><th>SRE</th><th>Service Team</th><th>Product</th><th class="winner-col">Incident Commander</th></tr>
+            </thead>
+            <tbody>
+                <tr class="fragment"><td class="metric-col">Severity Triage</td><td>R</td><td>C</td><td>I</td><td class="winner-col">A</td></tr>
+                <tr class="fragment"><td class="metric-col">Mitigation Decision</td><td>C</td><td>R</td><td>I</td><td class="winner-col">A</td></tr>
+                <tr class="fragment"><td class="metric-col">External Comms</td><td>I</td><td>I</td><td>R</td><td class="winner-col">A</td></tr>
+                <tr class="fragment"><td class="metric-col">Postmortem Actions</td><td>R</td><td>R</td><td>C</td><td class="winner-col">A</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section>
+    <!-- <span class="template-tag">Risk Register</span> -->
+    <h2 class="slide-title">Top Operational Risks</h2>
+    <div class="risk-grid">
+        <div class="risk-card">
+            <p><span class="metric-pill">High</span><strong>Single collector gateway</strong></p>
+            <p>Failure can interrupt ingestion for all services.</p>
+            <p><small>Mitigation: active-active collectors + health-based failover.</small></p>
+        </div>
+        <div class="risk-card">
+            <p><span class="metric-pill">Medium</span><strong>Unbounded log cardinality</strong></p>
+            <p>Uncontrolled labels can spike cost and query latency.</p>
+            <p><small>Mitigation: enforce attribute policy and sampling controls.</small></p>
+        </div>
+        <div class="risk-card">
+            <p><span class="metric-pill">Medium</span><strong>Missing ownership tags</strong></p>
+            <p>Alerts lack direct team routing and increase MTTR.</p>
+            <p><small>Mitigation: block deploys without service/team metadata.</small></p>
+        </div>
+        <div class="risk-card">
+            <p><span class="metric-pill">High</span><strong>No error budget policy</strong></p>
+            <p>Feature velocity can erode reliability silently.</p>
+            <p><small>Mitigation: tie release gates to SLO burn trends.</small></p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <span class="template-tag">Persona-Based Messaging</span>
+    <h2 class="slide-title">Tailor Message by Audience</h2>
+    <div class="usecase-grid">
+        <div class="usecase-card"><h3>VP Engineering</h3><p>Focus on release confidence, downtime risk, and team throughput.</p></div>
+        <div class="usecase-card"><h3>Platform Lead</h3><p>Focus on tool standardization, toil reduction, and migration strategy.</p></div>
+        <div class="usecase-card"><h3>CFO / FinOps</h3><p>Focus on unit economics, cost predictability, and long-term TCO.</p></div>
+    </div>
+</section>
+
+<section>
+    <span class="template-tag">Use-Case Matrix</span>
+    <h2 class="slide-title">Pattern Selection by Scenario</h2>
+    <div class="table-wrap">
+        <table class="slide-table">
+            <thead>
+                <tr><th class="metric-col">Scenario</th><th>Best Pattern</th><th>Why It Works</th></tr>
+            </thead>
+            <tbody>
+                <tr class="fragment"><td class="metric-col">Exec readout</td><td>KPI Scoreboard</td><td>Fast signal, low cognitive load</td></tr>
+                <tr class="fragment"><td class="metric-col">Architecture review</td><td>Diagram + Bullets</td><td>Visual flow plus implementation nuance</td></tr>
+                <tr class="fragment"><td class="metric-col">Tool selection</td><td>Weighted Decision Table</td><td>Transparent trade-offs and rationale</td></tr>
+                <tr class="fragment"><td class="metric-col">Incident recap</td><td>Timeline + RACI</td><td>Clear sequence and accountability</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section>
+    <span class="template-tag">AWS Current-State Architecture</span>
+    <h2 class="slide-title">Current-State AWS Observability Stack</h2>
+    <div class="arch-grid">
+        <div class="arch-canvas">
+            <p><strong>Architecture Placeholder</strong></p>
+            <div class="arch-layers">
+                <div class="arch-layer">1) Workloads: ECS, EKS, Lambda, EC2</div>
+                <div class="arch-layer">2) Collection: ADOT Agents + OTel Collector Gateway</div>
+                <div class="arch-layer">3) Processing: Sampling, Redaction, Enrichment</div>
+                <div class="arch-layer">4) Storage: CloudWatch Logs, AMP, X-Ray</div>
+                <div class="arch-layer">5) Consumption: Grafana, Alarms, Incident Manager</div>
+            </div>
+        </div>
+        <div class="component-list">
+            <h3>Component Index</h3>
+            <ol>
+                <li><strong>ADOT Collector:</strong> ingress and pipeline control point</li>
+                <li><strong>CloudWatch:</strong> central logs/metrics and alarms</li>
+                <li><strong>X-Ray:</strong> request-level tracing and service map</li>
+                <li><strong>AMP:</strong> scalable Prometheus metrics backend</li>
+                <li><strong>Grafana:</strong> unified dashboard and drill-down layer</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section>
+    <span class="template-tag">Component Description Section</span>
+    <h2 class="slide-title">Describe Each Architecture Component</h2>
+    <div class="component-grid">
+        <div class="component-card">
+            <h3>ADOT Collector</h3>
+            <p><strong>Role:</strong> Receive/process/export telemetry.</p>
+            <p><strong>Why it exists:</strong> Decouple apps from backends.</p>
+            <p><strong>Key config:</strong> `receivers`, `processors`, `exporters`.</p>
+        </div>
+        <div class="component-card">
+            <h3>CloudWatch</h3>
+            <p><strong>Role:</strong> Metrics, logs, alarms.</p>
+            <p><strong>Why it exists:</strong> Native AWS observability baseline.</p>
+            <p><strong>Key config:</strong> retention, metric filters, alarm policies.</p>
+        </div>
+        <div class="component-card">
+            <h3>X-Ray</h3>
+            <p><strong>Role:</strong> Trace visualization and dependency map.</p>
+            <p><strong>Why it exists:</strong> Speed up root-cause isolation.</p>
+            <p><strong>Key config:</strong> sampling rules, service naming, annotations.</p>
+        </div>
+        <div class="component-card">
+            <h3>AMP + Grafana</h3>
+            <p><strong>Role:</strong> Prometheus storage and dashboards.</p>
+            <p><strong>Why it exists:</strong> Scalable metrics + cross-team insights.</p>
+            <p><strong>Key config:</strong> scrape strategy, workspace IAM, dashboard folders.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <span class="template-tag">Case Study</span>
+    <h2 class="slide-title">Customer Story: Latency Reduction</h2>
+    <div class="split">
+        <div class="split-col glass-card">
+            <h3>Before</h3>
+            <ul>
+                <li class="fragment">P95 checkout latency: 1.9s</li>
+                <li class="fragment">No span-level DB visibility</li>
+                <li class="fragment">Frequent paging during promotions</li>
+            </ul>
+        </div>
+        <div class="split-col glass-card">
+            <h3 class="text-accent">After 8 Weeks</h3>
+            <ul>
+                <li class="fragment">P95 checkout latency: 650ms</li>
+                <li class="fragment">MTTR reduced from 72m to 24m</li>
+                <li class="fragment">43% fewer non-actionable alerts</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section>
+    <span class="template-tag">Checklist Slide</span>
+    <h2 class="slide-title">Pre-Go-Live Reliability Checklist</h2>
+    <ul>
+        <li class="fragment">Telemetry contract defined for all tier-1 services</li>
+        <li class="fragment">SLO + error budget approved by engineering leadership</li>
+        <li class="fragment">Runbook linked in every critical alert</li>
+        <li class="fragment">On-call handoff and escalation path tested</li>
+        <li class="fragment">Cost guardrails and retention policy configured</li>
+    </ul>
+</section>
+
+<section>
+    <span class="template-tag">FAQ Slide</span>
+    <h2 class="slide-title">Common Stakeholder Questions</h2>
+    <div class="faq-item"><strong>Q:</strong> Are we locked into one vendor?<br><small><strong>A:</strong> No, OTel keeps instrumentation portable.</small></div>
+    <div class="faq-item"><strong>Q:</strong> Will this increase cloud spend?<br><small><strong>A:</strong> Not if sampling and retention are governed.</small></div>
+    <div class="faq-item"><strong>Q:</strong> How soon can we see impact?<br><small><strong>A:</strong> Usually within the first pilot service rollout.</small></div>
+</section>
+
+<section>
+    <span class="template-tag">Workshop Exercise</span>
+    <h2 class="slide-title">Breakout: Build Your First SLO</h2>
+    <ol>
+        <li class="fragment">Choose one user-facing journey</li>
+        <li class="fragment">Define good event vs valid event</li>
+        <li class="fragment">Set reliability target for 30 days</li>
+        <li class="fragment">Propose fast-burn and slow-burn alerts</li>
+    </ol>
+    <p class="fragment"><small>Expected output: one practical SLO spec per team.</small></p>
+</section>
+
+<section>
+    <span class="template-tag">Appendix / Reference</span>
+    <h2 class="slide-title">Reference Architecture Links</h2>
+    <ul>
+        <li><code>otelcol-config.yaml</code> baseline template</li>
+        <li><code>slo-policy.md</code> governance guardrails</li>
+        <li><code>alert-routing.md</code> escalation ownership map</li>
+        <li><code>incident-runbook.md</code> responder playbook</li>
+    </ul>
+</section>
